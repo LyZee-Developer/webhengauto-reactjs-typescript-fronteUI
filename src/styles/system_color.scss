@@ -1,0 +1,84 @@
+:root{
+     --bg:rgb(255, 255, 255);
+    --color-1:rgba(0, 0, 0, 0.30);
+    --color-2:rgb(0, 0, 0, 0.50);
+    --color-3:rgb(0, 0, 0, 0.70);
+    --color-4:rgb(0, 0, 0);
+    --color-cnstra-1:rgba(255, 255, 255, 0.30);
+    --color-cnstra-2:rgb(255, 255, 255, 0.50);
+    --color-cnstra-3:rgb(255, 255, 255, 0.70);
+    --color-cnstra-4:rgb(255, 255, 255);
+    --bg-card:#6363630c;
+    --bg-cnstra-card:#414141;
+    --loading:#d5d5d561;
+    --bd-color : #c9c9c9;
+    --bd-constra-color : #414141;
+     --bd-color-100 : #f9f9f9;
+}
+.dark{
+    --bg:rgb(0, 0, 0);
+    --color-1:rgba(255, 255, 255, 0.30);
+    --color-2:rgb(255, 255, 255, 0.50);
+    --color-3:rgb(255, 255, 255, 0.70);
+    --color-4:rgb(255, 255, 255);
+    --color-cnstra-1:rgba(0, 0, 0, 0.30);
+    --color-cnstra-2:rgb(0, 0, 0, 0.50);
+    --color-cnstra-3:rgb(0, 0, 0, 0.70);
+    --color-cnstra-4:rgb(0, 0, 0);
+    --bg-card:#121212;
+    --bg-cnstra-card:#535353;
+    --loading:#d9d6d61a;
+    --bd-color : #414141;
+    --bd-constra-color : #c9c9c9;
+    --bd-color-100 : #161616;
+}
+body{
+    background-color: var(--bg) !important;
+}
+.color-1{
+    color: var(--color-1) !important;
+}
+.color-2{
+    color: var(--color-2) !important;
+}
+.color-3{
+    color: var(--color-3) !important;
+}
+.color-4{
+    color: var(--color-4) !important;
+}
+.bg-card{
+    background: var(--bg-card) !important;
+}
+.bg-loading{
+    background: var(--loading) !important;
+}
+.bd-card{
+    border: 1px solid var(--bd-color) !important;
+}
+.bg-card-100{
+    background: var(--bd-color-100) !important;
+}
+.constrast {
+    .color-1{
+        color: var(--color-cnstra-1) !important;
+    }
+    .color-2{
+        color: var(--color-cnstra-2) !important;
+    }
+    .color-3{
+        color: var(--color-cnstra-3) !important;
+    }
+    .color-4{
+        color: var(--color-cnstra-4) !important;
+    }
+    .bg-card{
+        background: var(--bg-cnstra-card) !important;
+    }
+    .bg-loading{
+        background: var(--loading) !important;
+    }
+    .bd-card{
+        border: 1px solid var(--bd-constra-color) !important;
+    }
+}

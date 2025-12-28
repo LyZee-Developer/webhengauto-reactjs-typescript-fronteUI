@@ -1,13 +1,62 @@
 on:
     push:
         branches:
-          - master
+            - master
+env:
+    IMAGE_NAME: heng-auto
 jobs:
-    build:
+    build-push:
         runs-on: ubuntu-latest
+        environment: DOCKER_ENV
         steps:
-            - uses: actions/checkout@4
-            - name: Echo Message
+            - name: Clone code
+              uses: actions/checkout@v3
+            - name: Use with SHA
               run: |
-                echo "Processing CI ..."
-                
+                echo "TAG=${GITHUB_SHA::8}" >> $GITHUB_ENV
+            - name: Show Tag
+              run: |
+                echo "TAG is ${{ env.TAG }} "
+            - name: Login to Docker
+              run: |
+                echo "${{ secrets.PW }}" | docker login -u "${{ secrets.USERNAME }}" --password-stdin
+            - name: Build Image for docker hub
+              run: |
+                docker build -t   ${{ secrets.USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAG }} -f dep.Dockerfile .
+            - name: Push DockerHub
+              run: |
+                docker push ${{ secrets.USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
+           
+            - name: Check Container
+              run: |
+                docker ps
+            - name: Logout from registry
+              if: always()
+              run: |
+                docker logout
+    deploy-gcp:
+      needs: build-push
+      runs-on: ubuntu-latest
+      environment: GOOGLE_ENV
+      steps:
+          - name: Clone code
+            uses: actions/checkout@v3
+          - name: Use with SHA
+            run: |
+                echo "TAG=${GITHUB_SHA::8}" >> $GITHUB_ENV
+          - name: Show Tag
+            run: |
+                echo "TAG is ${{ env.TAG }} "   
+          - name: Deploy by ssh
+            uses: appleboy/ssh-action@v1.0.0
+            with:
+              host: ${{ secrets.IP }}
+              username: ${{ secrets.USER }}
+              key: ${{ secrets.PK }}
+              envs: TAG
+              script: |
+                docker stop heng-auto-app || true
+                docker rm heng-auto-app || true
+                docker run -dp 8090:80 \
+                --name heng-auto-app \
+                "lsdockers/${{env.IMAGE_NAME}}:${{env.TAG}}"

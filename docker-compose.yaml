@@ -1,0 +1,8 @@
+services:
+  react-heng-auto:
+    image: lsdockers/heng-auto:v2.0.4
+    container_name: react-web-heng-auto-cont
+    ports:
+      - 3034:80
+    restart: always
+    pull_policy: always

@@ -22,9 +22,7 @@ jobs:
                 echo "${{ secrets.PW }}" | docker login -u "${{ secrets.USERNAME }}" --password-stdin
             - name: Build Image for docker hub
               run: |
-
-                echo "Username: ${{ secrets.USERNAME }} , ImageName ${{ env.IMAGE_NAME }} "
-                docker build -t ${{ secrets.USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAG }} -f Dockerfile .
+                docker build -t  ${{ secrets.USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAG }} -f Dockerfile .
 
             - name: Push DockerHub
               run: |

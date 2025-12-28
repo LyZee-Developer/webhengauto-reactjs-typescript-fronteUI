@@ -10,6 +10,7 @@ import { https } from "../../utils/https";
 import { isEmptyData, translate } from "../../utils/GlobalHelper";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { CarFixData, ServiceTypeFixData } from "../../fix_data/system_data";
 const BookAppointmentComponent = () => {
   const tr = useSelector((state:RootState)=>state.system.language);
   const isDark = useSelector((state:RootState)=>state.system.isDark);
@@ -33,36 +34,39 @@ const BookAppointmentComponent = () => {
     name:false,
     problem:false,
   });
-  const getData = async (type:string) => {
-      var url = "http://localhost:8989/api/car/list"
-      if (type=="service") url = "http://localhost:8989/api/service_type/list"
-        const {data,error} = await https({
-            url:url,
-            data:{
-                Id:0,
-                Search:"",
-                OrderBy:"Id",
-                OrderDir:"asc",
-                Status:true,
-                Page:1,
-                Record:0
-            },
-            method:"post"
-        });
-        if(data.length > 0 ){
-          if(type=="service") setService(data)
-          else setCar(data)
-          setIsLoading(false);
-        }else {
-            if(error!=undefined) ShowSnackBar(error)
-        }
-    };
+  // const getData = async (type:string) => {
+  //     var url = "http://localhost:8989/api/car/list"
+  //     if (type=="service") url = "http://localhost:8989/api/service_type/list"
+  //       const {data,error} = await https({
+  //           url:url,
+  //           data:{
+  //               Id:0,
+  //               Search:"",
+  //               OrderBy:"Id",
+  //               OrderDir:"asc",
+  //               Status:true,
+  //               Page:1,
+  //               Record:0
+  //           },
+  //           method:"post"
+  //       });
+  //       if(data.length > 0 ){
+  //         if(type=="service") setService(data)
+  //         else setCar(data)
+  //         setIsLoading(false);
+  //       }else {
+  //           if(error!=undefined) ShowSnackBar(error)
+  //       }
+  //   };
   useEffect(() => {
-    getData("service");
-    getData("car");
+    // getData("service");
+    // getData("car");
+    setService(ServiceTypeFixData)
+    setCar(CarFixData)
   }, []);
    const OnSubmit=()=>{
     setHasSubmitInfo(false);
+    setIsLoading(false);
     setPending(true)
     console.log({
       fullName:fullName,

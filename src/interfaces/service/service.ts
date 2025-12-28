@@ -1,6 +1,6 @@
 export interface IServiceData{
     createdBy: string,
-    createdDate: Date,
+    createdDate: Date | string,
     database: string,
     description: string,
     descriptionEnglish: string,
@@ -12,12 +12,13 @@ export interface IServiceData{
     title: string,
     titleEnglish: string,
     type: string,
-    updatedBy: string,
-    updatedDate: Date
+    updatedBy: string | null,
+    updatedDate: Date | null
 }
+
 export interface IServiceDetail{
     createdBy: string,
-    createdDate: Date,
+    createdDate: Date | string,
     database: string,
     description: string,
     descriptionEnglish: string,
@@ -27,6 +28,6 @@ export interface IServiceDetail{
     status: boolean,
     title: string,
     titleEnglish: string,
-    updatedBy: string,
-    updatedDate: Date
+    updatedBy: string| null,
+    updatedDate: Date | null  | string
 }

@@ -1,6 +1,6 @@
 export interface Car{
     createdBy:string,
-    createdDate:Date,
+    createdDate:Date | string,
     database:string,
     englishName:string,
     id:number,
@@ -8,21 +8,21 @@ export interface Car{
     pathImage:string,
     recordCount:number,
     status:boolean,
-    updatedBy:string,
-    updatedDate:Date
+    updatedBy:string| null,
+    updatedDate:Date| null | string,
 }
 
 export interface Service{
     createdBy:string,
-    createdDate:Date,
+    createdDate:Date | string,
     database:string,
     englishName:string,
     id:number,
     name:string,
     recordCount:number,
     status:boolean,
-    updatedBy:string,
-    updatedDate:Date
+    updatedBy:string | null,
+    updatedDate:Date| null | string,
 }
 
 export interface AppointmentData{

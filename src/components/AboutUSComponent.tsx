@@ -2,14 +2,14 @@ import { useSelector } from 'react-redux'
 import imgfix from '../assets/service/prop.jpg'
 import hand from '../assets/service/hand-gear.svg'
 import setting_point from '../assets/service/setting-point.svg'
-import noimage from '../assets/system/no_image.jpg'
+// import noimage from '../assets/system/no_image.jpg'
 import type { RootState } from '../store/store'
 import { useEffect, useState } from 'react'
 import { https } from '../utils/https'
 import type { PartnerSupport } from '../interfaces/partner/partner'
 import { translate, ui } from '../utils/GlobalHelper'
-import { ShowSnackBar } from '../utils/system_data'
 import type { AboutUs, AboutUsDetail } from '../interfaces/aboutus/about_us'
+import { AboutUsFixData, HeaderAboutUsFixedData, PartnerFixDate } from '../fix_data/system_data'
 const AboutUSComponent = () => {
     var isDark = useSelector((state:RootState)=>state.system.isDark);
     const tr = useSelector((state:RootState)=>state.system.language);
@@ -44,55 +44,60 @@ const AboutUSComponent = () => {
     
   }, []); 
  useEffect(() => {
-    getDataAboutUs();
+    // getDataAboutUs();
+    setAboutUs(HeaderAboutUsFixedData)
+    setAboutUsDetail(AboutUsFixData)
+    setListPartner(PartnerFixDate)
+    setIsLoadingAboutUs(false);
+    setIsLoading(false);
   }, [listPartner]); 
 
-    const getDataAboutUs = async () => {
-        setIsLoadingAboutUs(true);
-        const {data} = await https({
-            url:"http://localhost:8989/api/block_content/list",
-            data:{
-                Id:0,
-                Search:"",
-                OrderBy:"Id",
-                OrderDir:"desc",
-                IsComplete:false,
-                Page:1,
-                Record:10
-            },
-            method:"post"
-        });
-        if(data.length > 0 ){
-            setIsLoadingAboutUs(false);
-            console.log("about lst : ",data)
-            var checkList = data?.filter((v:any)=>v.type=="AboutUs");
-           setAboutUs(checkList[0])
-           getDataAboutUsDet();
-        } 
-    };
-    const getDataAboutUsDet = async () => {
-        const {data,error} = await https({
-            url:"http://localhost:8989/api/block_content_detail/list",
-            data:{
-                id:0,
-                search:"",
-                orderBy:"Id",
-                orderDir:"desc",
-                isComplete:true,
-                page:1,
-                record:10,
-                contentBlockId:aboutUs?.id
-            },
-            method:"post"
-        });
-        if(data.length > 0 ){
-            console.log("detail ",data)
-            setIsLoadingAboutUs(false);
-            setAboutUsDetail(data)
-        }else {
-            if(error!=undefined) ShowSnackBar(error)
-        }
-    };
+    // const getDataAboutUs = async () => {
+    //     setIsLoadingAboutUs(true);
+    //     const {data} = await https({
+    //         url:"http://localhost:8989/api/block_content/list",
+    //         data:{
+    //             Id:0,
+    //             Search:"",
+    //             OrderBy:"Id",
+    //             OrderDir:"desc",
+    //             IsComplete:false,
+    //             Page:1,
+    //             Record:10
+    //         },
+    //         method:"post"
+    //     });
+    //     if(data.length > 0 ){
+    //         setIsLoadingAboutUs(false);
+    //         console.log("about lst : ",data)
+    //         var checkList = data?.filter((v:any)=>v.type=="AboutUs");
+    //        setAboutUs(checkList[0])
+    //        getDataAboutUsDet();
+    //     } 
+    // };
+    // const getDataAboutUsDet = async () => {
+    //     const {data,error} = await https({
+    //         url:"http://localhost:8989/api/block_content_detail/list",
+    //         data:{
+    //             id:0,
+    //             search:"",
+    //             orderBy:"Id",
+    //             orderDir:"desc",
+    //             isComplete:true,
+    //             page:1,
+    //             record:10,
+    //             contentBlockId:aboutUs?.id
+    //         },
+    //         method:"post"
+    //     });
+    //     if(data.length > 0 ){
+    //         console.log("detail ",data)
+    //         setIsLoadingAboutUs(false);
+    //         setAboutUsDetail(data)
+    //     }else {
+    //         if(error!=undefined) ShowSnackBar(error)
+    //     }
+    // };
 
 
  
@@ -167,7 +172,7 @@ const AboutUSComponent = () => {
                         {
                             !isLoading?(<>{
                                 [...listPartner].map(val=>(<div className={`flex items-center gap-x-3 ${val?.id}`}>
-                                <img src={val?.pathImage==""?noimage:`http://localhost:8989/${val?.pathImage}`} alt="" className="w-[40px] h-[40px] rounded-full" />
+                                <img src={val?.pathImage!==""?val.pathImage:`http://localhost:8989/${val?.pathImage}`} alt="" className="w-[40px] h-[40px] rounded-full" />
                                 <div className='text-white'>{val?.name}</div>
                             </div>))
                             }</>):(<>

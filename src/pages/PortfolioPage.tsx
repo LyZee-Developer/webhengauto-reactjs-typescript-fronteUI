@@ -11,39 +11,42 @@ import { useEffect, useRef, useState } from "react";
 // import 'swiper/bundle';
 // const swiper = useSwiper();
 import type { Swiper as SwiperType } from "swiper";
-import { duration, ShowSnackBar } from "../utils/system_data";
+import { duration } from "../utils/system_data";
 import { useSelector } from "react-redux";
 import type { RootState } from "../store/store";
-import { https } from "../utils/https";
+// import { https } from "../utils/https";
 import type { Portfolio } from "../interfaces/portfolio/data";
 import { ui } from "../utils/GlobalHelper";
+import { portfoliFixData } from "../fix_data/system_data";
 const PortfolioPage = () => {
     const [ldata,setLData] = useState<Portfolio[]>([]);
     const [isLoading,setIsLoading]=useState<boolean>(false);
-    const getData = async () => {
-        setIsLoading(true);
-        const {data,error} = await https({
-            url:"http://localhost:8989/api/portfolio/list",
-            data:{
-                Id:0,
-                Search:"",
-                OrderBy:"Id",
-                OrderDir:"desc",
-                IsComplete:false,
-                Page:1,
-                Record:10
-            },
-            method:"post"
-        });
-        console.log("data=>",data)
-        if(data.length > 0 ){
-            setIsLoading(false); 
-            if (data!=undefined) setLData(data)
-        } else if(error!=undefined) ShowSnackBar(error)
-    };
+    // const getData = async () => {
+    //     setIsLoading(true);
+    //     const {data,error} = await https({
+    //         url:"http://localhost:8989/api/portfolio/list",
+    //         data:{
+    //             Id:0,
+    //             Search:"",
+    //             OrderBy:"Id",
+    //             OrderDir:"desc",
+    //             IsComplete:false,
+    //             Page:1,
+    //             Record:10
+    //         },
+    //         method:"post"
+    //     });
+    //     console.log("data=>",data)
+    //     if(data.length > 0 ){
+    //         setIsLoading(false); 
+    //         if (data!=undefined) setLData(data)
+    //     } else if(error!=undefined) ShowSnackBar(error)
+    // };
    
     useEffect(() => {
-        getData();
+        // getData();
+        setIsLoading(false)
+        setLData(portfoliFixData)
     }, []); // Empty dependency array ensures it runs once on mount
     const swiperRef = useRef<SwiperType | null>(null);
     const tr = useSelector((state:RootState)=>state.system.language);
@@ -122,7 +125,8 @@ const PortfolioPage = () => {
                                                     val.images.length > 0 && !isLoading ? (<>
                                                         {
                                                         val.images.map((v,index)=><SwiperSlide key={index} className="w-full h-full flex justify-center items-center">
-                                                            <img src={`${v.hostUrl}/${v.pathImage}`} alt="" className="object-contain w-full h-full" />
+                                                            {/* <img src={`${v.hostUrl}/${v.pathImage}`} alt="" className="object-contain w-full h-full" /> */}
+                                                            <img src={`${v.pathImage}`} alt="" className="object-contain w-full h-full" />
                                                         </SwiperSlide>)
                                                         }
                                                     </>):(<>

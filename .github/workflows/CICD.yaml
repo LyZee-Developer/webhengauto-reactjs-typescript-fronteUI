@@ -1,0 +1,13 @@
+on:
+    push:
+        branches:
+          - master
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@4
+            - name: Echo Message
+              run: |
+                echo "Processing CI ..."
+                

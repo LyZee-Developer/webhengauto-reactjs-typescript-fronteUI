@@ -7,9 +7,9 @@ import type { RootState } from '../store/store'
 import { useEffect, useState } from 'react'
 import { setOwnInfo } from '../store/system/SystemStore'
 import { socials } from '../utils/system_data'
-import { https } from '../utils/https'
 import type { IOwnerInfo } from '../interfaces/info/info'
 import { translate, ui } from '../utils/GlobalHelper'
+import { OwnerFixedDate } from '../fix_data/system_data'
 const FooterPage = () => {
     var isDark = useSelector((state:RootState)=>state.system.isDark);
     const tr = useSelector((state:RootState)=>state.system.language);
@@ -22,32 +22,37 @@ const FooterPage = () => {
     const [info,setInfo] = useState<IOwnerInfo>()
     var serviceList = useSelector((state:RootState)=>state.system.services);
     // Use an async function inside useEffect for async/await syntax
-    const getData = async () => {
-        setIsLoading(true);
-        const {data} = await https({
-            url:"http://localhost:8989/api/owner_info/list",
-            data:{
-                Id:0,
-                Search:"",
-                OrderBy:"Id",
-                OrderDir:"desc",
-                IsComplete:false,
-                Page:1,
-                Record:10
-            },
-            method:"post"
-        });
-            console.log("->222",data)
-        if(data.length > 0 ){
-            setIsLoading(false);
-            setInfo(data[0])
-            dispatch(setOwnInfo(data[0]))
-        } 
-    };
+    // const getData = async () => {
+    //     setIsLoading(true);
+    //     const {data} = await https({
+    //         url:"http://localhost:8989/api/owner_info/list",
+    //         data:{
+    //             Id:0,
+    //             Search:"",
+    //             OrderBy:"Id",
+    //             OrderDir:"desc",
+    //             IsComplete:false,
+    //             Page:1,
+    //             Record:10
+    //         },
+    //         method:"post"
+    //     });
+    //         console.log("->222",data)
+    //     if(data.length > 0 ){
+    //         setIsLoading(false);
+    //         setInfo(data[0])
+    //         dispatch(setOwnInfo(data[0]))
+    //     }else {
+    //         setIsLoading(false)
+    //     }
+    // };
   useEffect(() => {
     if (hasFetched) return;
     hasFetched = true;
-    getData();
+    dispatch(setOwnInfo(OwnerFixedDate))
+    setInfo(OwnerFixedDate)
+    setIsLoading(false)
+    // getData();
   }, []); // Empty dependency array ensures it runs once on mount
 
   const onClickSocial=(social:any)=>{

@@ -1,13 +1,13 @@
 export interface PartnerSupport{
     createdBy:string,
-    createdDate:Date,
+    createdDate:Date | string,
     database:string,
     englishName:string,
     id:number,
     name:string,
     pathImage:string,
     recordCount:number,
-    status:string,
-    updatedBy:string,
-    updatedDate:Date
+    status:boolean,
+    updatedBy:string | string | null,
+    updatedDate:Date | string | null,
 }

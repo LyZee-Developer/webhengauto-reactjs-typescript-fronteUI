@@ -1,8 +1,6 @@
 // import { Button } from '@heroui/react'
 import { useEffect, useState } from 'react'
-import { https } from '../utils/https'
 import { translate, ui } from '../utils/GlobalHelper'
-import { ShowSnackBar } from '../utils/system_data'
 import service1 from '../assets/service/car-check.svg'
 import website from '../assets/service/car-website.svg'
 import save from '../assets/service/save-water.svg'
@@ -14,6 +12,7 @@ import type { IServiceData, IServiceDetail } from '../interfaces/service/service
 import { useDispatch, useSelector } from 'react-redux'
 import { setDataService } from '../store/system/SystemStore'
 import type { RootState } from '../store/store'
+import { HeaderFixedData, ServiceFixData } from '../fix_data/system_data'
 
 const ServiceComponent = () => {
     const [list,setList] = useState<IServiceData>();
@@ -22,60 +21,69 @@ const ServiceComponent = () => {
     const tr = useSelector((state:RootState)=>state.system.language);
     const dispatch = useDispatch();
     var imageService = [service1,website,save,screwdriver,wrench,accumulator,setting];
-    const getData = async () => {
-        setIsLoading(true);
-        const {data} = await https({
-            url:"http://localhost:8989/api/block_content/list",
-            data:{
-                id:0,
-                search:"",
-                orderBy:"Id",
-                orderDir:"desc",
-                isComplete:false,
-                page:1,
-                record:10,
-                type:"service"
-            },
-            method:"post"
-        });
-        if(data.length > 0 ){
-            setIsLoading(false);
-            var checkList = data?.filter((v:any)=>v.type=="Service");
-            console.log("service data => ",checkList)
-            if (checkList.length>0) setList(checkList[0])
+    // const getData = async () => {
+    //     setIsLoading(true);
+    //     const {data} = await https({
+    //         url:"http://localhost:8989/api/block_content/list",
+    //         data:{
+    //             id:0,
+    //             search:"",
+    //             orderBy:"Id",
+    //             orderDir:"desc",
+    //             isComplete:false,
+    //             page:1,
+    //             record:10,
+    //             type:"service"
+    //         },
+    //         method:"post"
+    //     });
+    //     if(data.length > 0 ){
+    //         setIsLoading(false);
+    //         var checkList = data?.filter((v:any)=>v.type=="Service");
+    //         console.log("service data => ",checkList)
+    //         if (checkList.length>0) setList(checkList[0])
           
-        } 
-    };
-    const getListService = async () => {
-        const {data,error} = await https({
-            url:"http://localhost:8989/api/block_content_detail/list",
-            data:{
-                id:0,
-                search:"",
-                orderBy:"Id",
-                orderDir:"desc",
-                isComplete:true,
-                page:1,
-                record:10,
-                contentBlockId:list?.id
-            },
-            method:"post"
-        });
-        if(data.length > 0 ){
-            console.log("service",data)
-            setIsLoading(false);
-            setListService(data)
-            dispatch(setDataService(data));
-        }else {
-            if(error!=undefined) ShowSnackBar(error)
-        }
-    };
+    //     } 
+    // };
+    // const getListService = async () => {
+    //     const {data,error} = await https({
+    //         url:"http://localhost:8989/api/block_content_detail/list",
+    //         data:{
+    //             id:0,
+    //             search:"",
+    //             orderBy:"Id",
+    //             orderDir:"desc",
+    //             isComplete:true,
+    //             page:1,
+    //             record:10,
+    //             contentBlockId:list?.id
+    //         },
+    //         method:"post"
+    //     });
+    //     if(data.length > 0 ){
+    //         console.log("service",data)
+    //         setIsLoading(false);
+    //         setListService(data)
+    //         dispatch(setDataService(data));
+    //     }else {
+    //         if(error!=undefined) ShowSnackBar(error)
+    //     }
+    // };
   useEffect(() => {
-    getData();
+     console.log("test1,",ServiceFixData)
+    // getData();
+    var checkList = HeaderFixedData?.filter((v:any)=>v.type=="Service");
+    if (checkList.length>0) setList(checkList[0])
+    setListService(ServiceFixData)    
+    dispatch(setDataService(ServiceFixData));
   }, []); // Empty dependency array ensures it runs once on mount
   useEffect(()=>{
-      getListService();
+    //   getListService();
+    setIsLoading(false)
   },[list])
+  useEffect(()=>{
+     console.log("test,",listService)
+  },[listService])
  
   return (
     <div>
@@ -94,9 +102,10 @@ const ServiceComponent = () => {
         </div>
         <div className={`grid grid-cols-[repeat(auto-fill,minmax(330px,1fr))] max-[430px]:px-2 gap-7 max-w-[1000px] mx-auto px-[20px]`}>
             {
+               
                 listService.length>0?(<>
                 {
-                    [...listService].map((val,index)=>(
+                    listService.map((val,index)=>(
                     <div className={`bg-card  flex flex-col gap-y-4 w-full p-5 rounded-2xl ${val}`}>
                         <div className='w-[45px] h-[45px]'> <img className='w-full h-full' src={ imageService[index>6?6:index]} alt="" /></div>
                         <div>

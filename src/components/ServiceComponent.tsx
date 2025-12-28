@@ -89,7 +89,7 @@ const ServiceComponent = () => {
     <div>
         <div className="w-full flex max-[430px]:p-2 max-[1600px]:p-2 max-[1300px]:p-2 max-[780px]:p-2 max-[830px]:p-2 justify-center flex-col items-center gap-y-2  pb-10 px-[20px] pt-20">
             {
-                !isLoading?(<><h3 className="font-medium color-3">{tr.our_service}12</h3>
+                !isLoading?(<><h3 className="font-medium color-3">{tr.our_service}</h3>
             <h1 className="text-[30px] font-bold color-4 max-[430px]:text-[20px]">{translate(list?.title||"",list?.titleEnglish||"")}</h1>
             <div className="max-w-[800px] text-center color-2"><p>{translate(list?.description||"",list?.descriptionEnglish||"")}</p></div></>):(
             <div className='flex flex-col w-full justify-center items-center gap-y-3'>

@@ -56,8 +56,8 @@ jobs:
               key: ${{ secrets.PK }}
               envs: TAG
               script: |
-                docker stop heng-auto-app || true
-                docker rm heng-auto-app || true
+                docker stop react-heng-auto-cont || true
+                docker rm react-heng-auto-cont || true
                 docker run -dp 8090:80 \
-                --name heng-auto-app \
+                --name react-heng-auto-cont \
                 "lsdockers/${{env.IMAGE_NAME}}:${{env.TAG}}"

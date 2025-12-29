@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { SystemState } from "../../interfaces/system";
 import { country, getLanguage } from "../../utils/system_data";
 const initialState : SystemState ={
-    isDark : true,
+    isDark : false,
     isShowNavLeftMenu:false,
     headerType:"",
     ownInfo: {},

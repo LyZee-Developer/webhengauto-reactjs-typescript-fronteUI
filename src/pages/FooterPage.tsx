@@ -184,7 +184,7 @@ const FooterPage = () => {
             <div className={`w-[400px]   h-[150px]  rounded-xl  ${ui.animation} color-4 group relative cursor-pointer`} >
             </div></div>)}
         </div>
-            <div className='color-2  mt-4 text-center text-[13px] '>The website developed by <span className='text-[#0081d0]'>@Ly Leangseng</span></div>
+            <div className='color-2  mt-4 text-center text-[13px] '>The website developed by <span className='text-[#0081d0]'>@Ly Leangseng jENKIN</span></div>
     </div>
   )
 }

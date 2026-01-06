@@ -21,6 +21,8 @@ import { portfoliFixData } from "../fix_data/system_data";
 const PortfolioPage = () => {
     const [ldata,setLData] = useState<Portfolio[]>([]);
     const [isLoading,setIsLoading]=useState<boolean>(false);
+    const [TestingNotUse,setTestingNotUse]=useState<boolean>(false);
+    const [test,settest]=useState<boolean>(false);
     // const getData = async () => {
     //     setIsLoading(true);
     //     const {data,error} = await https({

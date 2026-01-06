@@ -21,6 +21,8 @@ import { portfoliFixData } from "../fix_data/system_data";
 const PortfolioPage = () => {
     const [ldata,setLData] = useState<Portfolio[]>([]);
     const [isLoading,setIsLoading]=useState<boolean>(false);
+    const [TestingNotUse,setTestingNotUse]=useState<boolean>(false);
+    const [test,settest]=useState<boolean>(false);
     // const getData = async () => {
     //     setIsLoading(true);
     //     const {data,error} = await https({
@@ -87,7 +89,7 @@ const PortfolioPage = () => {
         <div className="max-w-[1200px] mx-auto py-5">
             <p className="color-2 pl-5">{tr.portfolio}</p>
             <div className="w-full flex justify-between items-center px-5">
-                <div className="text-[40px] max-[600px]:text-[25px]  max-[400px]:text-[22px] font-medium color-4 ">{tr.we_are_proud_of_our_recent_success_work} Update</div>
+                <div className="text-[40px] max-[600px]:text-[25px]  max-[400px]:text-[22px] font-medium color-4 ">{tr.we_are_proud_of_our_recent_success_work} </div>
                 <div className="flex gap-x-6">
                     <div onClick={()=>onClickBack("back")} className="bg-card cursor-pointer p-3 rounded-full w-[55px] flex justify-center items-center h-[55px] color-3 "><FontAwesomeIcon icon={faArrowLeft} /></div>
                     <div onClick={()=>onClickBack("front")} className="bg-card cursor-pointer p-3 rounded-full w-[55px] flex justify-center items-center h-[55px] color-3 "><FontAwesomeIcon icon={faArrowRight} /></div>
